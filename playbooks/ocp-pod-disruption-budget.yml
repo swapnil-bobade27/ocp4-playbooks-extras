@@ -1,0 +1,5 @@
+---
+- name: Start Pod disruption budget
+  hosts: bastion
+  roles:
+  - ocp-pod-disruption-budget

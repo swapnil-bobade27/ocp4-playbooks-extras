@@ -1,0 +1,9 @@
+---
+# defaults file for playbooks/roles/ocp-pod-disruption-budget
+pdb_namespace: "openshift-pdb"
+pdb_name: web-pdb
+pdb_minAvailable: 3
+container_name: nginx
+container_image: quay.io/vahirwad/nginx-unprivileged:latest
+label_name: web
+remove_pdb: false

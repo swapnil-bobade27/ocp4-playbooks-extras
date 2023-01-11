@@ -91,3 +91,6 @@
 
 - import_playbook: ocp-descheduler.yml
   when: descheduler_role_enable is defined and descheduler_role_enable
+
+- import_playbook: ocp-pod-disruption-budget.yml
+  when: pdb_enabled is defined and pdb_enabled

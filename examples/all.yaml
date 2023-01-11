@@ -267,3 +267,7 @@ cronjob_startingDeadlineSeconds:
 cronjob_suspend:      
 cronjob_successfulJobsHistoryLimit:
 cronjob_failedJobsHistoryLimit:
+
+#pod disruption budget
+pdb_enabled: false
+pdb_minAvailable: 3
