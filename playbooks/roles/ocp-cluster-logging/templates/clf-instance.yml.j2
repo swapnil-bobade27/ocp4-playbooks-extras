@@ -8,9 +8,6 @@
         name: instance 
         namespace: openshift-logging 
       spec:
-        outputDefaults:
-          elasticsearch:
-            structuredTypeKey: openshift.labels.logs
         outputs:
 {% if elasticsearch_server_url is defined %}
         - name: elasticsearch-insecure
@@ -31,11 +28,9 @@
             msgID: mymsg
             procID: myproc
             severity: informational
-          url: "{{ syslog_server_url }}"
-{% if 'tls' in syslog_server_url %}
+          url: "{{ syslog_server_url }}" 
           secret: 
               name: syslog-secret
-{% endif %}
         - name: rsyslog-infra
           type: syslog 
           syslog: 
@@ -45,11 +40,9 @@
             msgID: mymsg
             procID: myproc
             severity: informational
-          url: "{{ syslog_server_url }}"
-{% if 'tls' in syslog_server_url %}
+          url: "{{ syslog_server_url }}" 
           secret: 
               name: syslog-secret
-{% endif %}
         - name: rsyslog-audit
           type: syslog 
           syslog: 
@@ -59,11 +52,9 @@
             msgID: mymsg
             procID: myproc
             severity: informational
-          url: "{{ syslog_server_url }}"
-{% if 'tls' in syslog_server_url %}
+          url: "{{ syslog_server_url }}" 
           secret: 
               name: syslog-secret
-{% endif %}
 {% endif %}
 {% if kafka_server_url is defined %}
         - name: kafka-app-logs

@@ -1,0 +1,51 @@
+---
+# Creating namespace for pod disruption budget
+- name: Create namespace for pod disruption budget
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ pdb_namespace }}"
+    
+# create pod disruption budget
+- name: Create pod disruption budget
+  block: 
+  - name: Create pod disruption budget
+    template:
+      src: "{{ role_path }}/templates/pdb-deployment.yml.j2"
+      dest: "{{ role_path }}/poddisruptionbudget.yml"
+
+  - name: create pod
+    k8s:
+      state: present
+      src: "{{ role_path }}/poddisruptionbudget.yml"
+  
+  - name: Check pod status
+    shell: oc wait --all --for=condition=Ready pods -n {{ pdb_namespace }} --timeout=60s
+
+  - name: Check created pods
+    shell: oc get pods -n {{ pdb_namespace }} -o wide
+    register: pdb_pods
+
+  - debug:
+      msg: "{{ pdb_pods.stdout_lines }}"
+
+  - name: Get pod disruption budget
+    shell: oc get pdb -n {{ pdb_namespace }}
+    register: get_pdb
+
+  - debug:
+      msg: "{{ get_pdb.stdout_lines }}"
+
+  - name: Describe pod disruption budget
+    shell: oc describe pdb -n {{ pdb_namespace }}
+    register: describe_pdb
+
+  - debug:
+      msg: "{{ describe_pdb.stdout_lines }}"
+
+  - name: Remove pod disruption budget
+    shell: oc delete -f "{{ role_path }}/poddisruptionbudget.yml"
+    when: remove_pdb
