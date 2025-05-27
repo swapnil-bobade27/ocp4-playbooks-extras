@@ -1,0 +1,11 @@
+# ipi-day2-operation vars
+enable_ipi_day2_operation: true
+rsct_git_repo: https://github.com/ocp-power-automation/rsct-operator.git
+rsct_dir: "{{ lookup('env', 'PWD') }}/rsct"
+rsct_namespace: rsct-operator-system
+lso_index: "" # provide LSO index image
+cluster_upi: false  #set to true if using UPI cluster
+odf_catsrc_image: "" #ODF catlog source image
+ipi_worker0: "" # IPI worker node name
+ipi_worker1: "" # IPI worker node name
+ipi_worker2: "" # IPI worker node name
